@@ -1,0 +1,10 @@
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-light bg-light mb-3 p-3">
+    <div class="d-flex align-items-center">
+      <div class="user" style="background-image:url('{{ request.session.image }}')"></div>
+      <a class="navbar-brand" href="#">Welcome, {{ request.session.first_name }} {{ request.session.last_name }}</a>
+      <a class="nav-link btn btn-primary btn-sm" href="/my_account/{{request.session.user_id}}">Edit My Account</a>
+      <a class="nav-link btn btn-primary btn-sm ml-3" href="/upload">Update Profile Picture</a>
+    </div>
+    <a class="nav-link btn btn-primary btn-sm" href="/logout">Log Out</a>
+  </nav>

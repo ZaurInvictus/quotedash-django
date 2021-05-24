@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a href="/quotes" class="btn btn-secondary mb-4">Back</a>
+<h2>Edit My Account:</h2>
+<!-- ALERT MESSAGES -->
+{% include 'partials/alert.html' %}
+<div class="container border d-flex flex-column align-items-center py-5">
+    <form action="edit/{{ user.id }}" method="POST" class=" w-75 ">
+        {% csrf_token %}
+        <div class="form row">
+            <div class="col-sm-12">
+                <input type="text" class="form-control" name='first_name' value="{{user.first_name}}"
+                    placeholder="First name">
+            </div>
+            <div class="col-sm-12  my-3">
+                <input type="text" class="form-control" name='last_name' value="{{user.last_name}}"
+                    placeholder="Last name">
+            </div>
+            <div class="col-sm-12">
+                <input type='text' class="form-control" name='email' value="{{user.email}}">
+            </div>
+            <div class="col-sm-12">
+                <input type="submit" class="btn btn-success  mt-3 w-100" value="Save">
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

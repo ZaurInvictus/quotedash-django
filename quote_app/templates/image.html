@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<a href="/quotes" class="btn btn-secondary mb-4">Back</a>
+<h2>Add Profile Picture:</h2>
+<div class="container border d-flex flex-column align-items-center py-5">
+
+
+    <!-- ADD PROFILE PICTURE -->
+    <!-- List of uploaded documents -->
+    <h3>Previous pictures:</h3> 
+    {% if documents %}
+    {% for document in documents %}
+    <div class="d-flex align-items-center">
+        <img src="{{ document.docfile.url }}" alt="img" class="my-1">
+        <a href="/delete_image/{{ document.id }}" class="btn btn-danger mx-3 my-1">Delete</a>
+        <a href="/set_profile/{{ document.id }}" class="btn btn-primary my-1">Set as Profile</a>
+    </div>
+        {% endfor %}
+    {% else %}
+    <p>No documents.</p>
+    {% endif %}
+    
+    <h3>Current:</h3>
+    <img src="{{ last.docfile.url }}" alt="img">
+    
+    <!-- Upload form. Note enctype attribute! -->
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.non_field_errors }}</p>
+
+        <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+        <p>
+            {{ form.docfile.errors }}
+            {{ form.docfile }}
+        </p>
+        <button class="btn btn-primary">Upload</button>
+    </form>
+
+</div>
+{% endblock %}

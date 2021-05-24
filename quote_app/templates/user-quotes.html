@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a href="/quotes" class="btn btn-secondary mb-4">Back</a>
+<h1> Quotes posted by {{ user_profile.first_name }} {{ user_profile.last_name }}</h1>
+
+<!-- ALERT MESSAGES -->
+{% include 'partials/alert.html' %}
+
+{% for q in user_profile.user_quotes.all %}
+<div>
+    <div class="d-flex justify-content-between align-items-center">
+        <p class="comment_wrapper w-100">{{ q.author }}: "{{ q.quote }}"</p>
+        {%  if request.session.user_id == q.posted_by.id %}
+        <button class="btn btn-primary mb-3 ml-2" type="button" data-toggle="collapse" data-target="#input_{{ q.id }}"
+            aria-expanded="false" aria-controls="collapseExample">
+            Edit
+        </button>
+    </div>
+
+    <div class="collapse" id="input_{{ q.id }}">
+        <div class="card card-body  d-flex flex-column align-items-center">
+                <form action="edit_quote/{{ q.id }}/{{ q.posted_by.id }}" method="POST" class=" w-75 ">
+                    {% csrf_token %}
+                    <div class="form row">
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name='author' value="{{ q.author }}"
+                                placeholder="First name">
+                        </div>
+                        <div class="col-sm-12  my-3">
+                            <input type="text" class="form-control" name='quote' value="{{ q.quote }}"
+                                placeholder="Last name">
+                        </div>
+                        <div class="col-sm-12">
+                            <input type="submit" class="btn btn-success  mt-3 w-100" value="Save">
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endfor %}
+
+{% endblock %}
